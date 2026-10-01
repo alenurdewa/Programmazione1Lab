@@ -15,6 +15,9 @@ int main(){
 
     int absDif = dif * ((-1)*(dif < 0)) + dif * ((1)*(dif > 0));
 
+    //altra soluzione
+    absDif = (a-b) * ((a>b) - (a<b));
+
     cout << "Differenza, con valore assoluto : " << absDif<< endl;
 
     return 0;
