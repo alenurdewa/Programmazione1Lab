@@ -10,16 +10,16 @@ int main(){
 
     cin >> a >> b;
 
-    int max = (a+b) - ((a>b) * b + (a<b) * a) - (a==b)*a;
-    int min = (a+b) - ((a<b) * b + (a>b) * a) - (a==b)*a;
+    int massimo = (a+b) - ((a>b) * b + (a<b) * a) - (a==b)*a;
+    int minimo = (a+b) - ((a<b) * b + (a>b) * a) - (a==b)*a;
 
 
     //Con l'utilizzo della libreria di cmath
-    max = max(a,b);
-    min = min(a,b);
+    massimo = max(a,b);
+    minimo = min(a,b);
 
-    cout << "Max = " << max << endl;
-    cout << "Min = " << min << endl;
+    cout << "Max = " << massimo << endl;
+    cout << "Min = " << minimo << endl;
 
     return 0;
 }
