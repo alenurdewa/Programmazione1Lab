@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int main(){
@@ -11,6 +12,11 @@ int main(){
 
     int max = (a+b) - ((a>b) * b + (a<b) * a) - (a==b)*a;
     int min = (a+b) - ((a<b) * b + (a>b) * a) - (a==b)*a;
+
+
+    //Con l'utilizzo della libreria di cmath
+    max = max(a,b);
+    min = min(a,b);
 
     cout << "Max = " << max << endl;
     cout << "Min = " << min << endl;
