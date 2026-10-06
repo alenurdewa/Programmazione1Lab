@@ -4,7 +4,7 @@ using namespace std;
 int main(){
 
     //Es trovare il minore tra tre numeri
-    int a, b,c;
+    int a = 0, b = 0,c = 0;
     cout << "Inserire in input a, b e c ";
     cin >> a >> b >> c;
 
