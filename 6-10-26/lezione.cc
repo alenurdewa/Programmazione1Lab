@@ -21,4 +21,13 @@ int main(){
         i--;
     }
 
+    //istruzione iterativa do-while
+
+    int j = 5;
+
+    do{
+        cout << i << endl;
+        i--;
+    } while (i>0);
+
 }
