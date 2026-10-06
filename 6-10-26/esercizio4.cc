@@ -4,13 +4,13 @@ using namespace std;
 int main(){
 
 
-    const float EPS = 0.000001; // "Accetta anche una piccola differenza, perché potrebbe essere dovuta all'approssimazione."
-    float x = 0,y = 0;
+    const double EPS = 0.000001; // "Accetta anche una piccola differenza, perché potrebbe essere dovuta all'approssimazione."
+    double x = 0,y = 0;
 
     cout << "Inserire x e y di un punto ";
     cin >> x >> y;
 
-    float a = 0, b= 0, c=0, d = 0;
+    double a = 0, b= 0, c=0, d = 0;
 
     cout << "Inserire x e y del vertice in alto a sinistra del rettangolo ";
     cin >> a >> b;
