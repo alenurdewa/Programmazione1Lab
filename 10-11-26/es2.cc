@@ -39,6 +39,20 @@ void stampaArray(int *m, int nRow, int nCol){
     cout << endl;
 }
 
+int calcolaTriangoloSuperiore(int *m, int nRow, int nCol){
+    int somma = 0;
+    
+    for(int r = 0; r < nRow; r++){
+        // Facciamo partire c da r: in questo modo prendiamo 
+        // solo la diagonale principale e tutto ciò che sta a destra
+        for(int c = r; c < nCol; c++){
+            somma += *(m + r * nCol + c);
+        }
+    }
+    
+    return somma;
+}
+
 int main(){
     srand(time(NULL));
 
@@ -51,6 +65,8 @@ int main(){
 
     stampaArray(*matrix, N_ROW,N_COL);
     stampaArray(*matriceTrasposta, N_COL, N_ROW);
+    int somma = calcolaTriangoloSuperiore(*matrix, N_ROW, N_COL);
+    cout << "Somma triangolo superiore = " << somma << endl;
     
 
 
