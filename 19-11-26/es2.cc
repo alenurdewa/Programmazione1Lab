@@ -4,17 +4,65 @@
 
 using namespace std;
 
-struct Studente {
+struct Studente
+{
     char nome[30];
     char cognome[30];
     int matricola;
     float media;
 };
 
+int cerca_nome_e_cognome(Studente **database, const char *nome, const char *cognome, int len) {
+    for (int i = 0; i < len; i++) {
+        if (database[i] != nullptr &&
+            strcmp(database[i]->nome, nome) == 0 &&
+            strcmp(database[i]->cognome, cognome) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 
-Studente* genera_studente(char nome[], char cognome[], int matricola, float media_ponderata) {
-    Studente* stud = new Studente;
+int cerca_matricola(Studente **database, int matricola, int len)
+{
+
+    int i = 0;
+    bool isFound = false;
+
+    while (i < len && !isFound)
+    {
+
+        if (database[i] != nullptr)
+        {
+            if (database[i]->matricola == matricola)
+            {
+                isFound = true;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
+
+    if (isFound)
+    {
+        return i;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+Studente *genera_studente(char nome[], char cognome[], int matricola, float media_ponderata)
+{
+    Studente *stud = new Studente;
     strcpy(stud->nome, nome);
     strcpy(stud->cognome, cognome);
 
@@ -24,7 +72,8 @@ Studente* genera_studente(char nome[], char cognome[], int matricola, float medi
     return stud;
 }
 
-void stampa_studente(Studente* studente) {
+void stampa_studente(Studente *studente)
+{
     cout << endl;
     cout << "Nome: " << studente->nome << endl;
     cout << "Cognome: " << studente->cognome << endl;
@@ -32,16 +81,18 @@ void stampa_studente(Studente* studente) {
     cout << "Media: " << studente->media << endl;
 }
 
-Studente** caricaDatabase(char file_name[], int n_righe) {
+Studente **caricaDatabase(char file_name[], int n_righe)
+{
     fstream input;
     input.open(file_name, ios::in);
 
-    if (!input.is_open()) {
+    if (!input.is_open())
+    {
         cerr << "Errore nell'apertura del file: " << file_name << endl;
         exit(1);
     }
 
-    Studente** database = new Studente*[n_righe];
+    Studente **database = new Studente *[n_righe];
 
     char nome[30];
     char cognome[30];
@@ -49,17 +100,28 @@ Studente** caricaDatabase(char file_name[], int n_righe) {
     float media;
 
     int i = 0;
-    while (i < n_righe && (input >> nome >> cognome >> matricola >> media)) {
+    while (i < n_righe && (input >> nome >> cognome >> matricola >> media))
+    {
         database[i] = genera_studente(nome, cognome, matricola, media);
         i++;
     }
 
+    i = 0;
+    while (i < n_righe)
+    {
+        if (database[i] == nullptr)
+        {
+            delete database[i];
+        }
+        i++;
+    }
 
     input.close();
     return database;
 }
 
-int main() {
+int main()
+{
     char nome_file[100];
     int n_righe;
 
@@ -69,19 +131,53 @@ int main() {
     cout << "Inserisci il numero di righe: ";
     cin >> n_righe;
 
-    Studente** database = caricaDatabase(nome_file, n_righe);
-    if (database == nullptr) {
+    Studente **database = caricaDatabase(nome_file, n_righe);
+    if (database == nullptr)
+    {
         return 1;
     }
 
-    for (int i = 0; i < n_righe; i++) {
-        if (database[i] != nullptr) {
-            stampa_studente(database[i]);
+    for (int i = 0; i < n_righe; i++)
+    {
+        if (database[i] != nullptr)
+        {
+            // stampa_studente(database[i]);
         }
     }
 
+    int matricola = 64727;
+
+    int numStud = cerca_matricola(database, matricola, n_righe);
+
+    if (numStud == -1)
+    {
+        cout << "Non è stato trovato nessuno studente con matricola == " << matricola << endl;
+    }
+    else
+    {
+        cout << "Studente con matricola == " << matricola << ": " << database[numStud]->nome << " " << database[numStud]->cognome << endl;
+    }
+
+    char nome[] = "Sofia";
+    char cognome[] = "Hamilton";
+
+    int numStudNomeCogn = cerca_nome_e_cognome(database, nome, cognome, n_righe);
+
+    if (numStudNomeCogn == -1)
+    {
+        cout << "Non è stato trovato nessuno studente con nome cognome == " << nome << " " << cognome << endl;
+    }
+    else
+    {
+        cout << endl
+             << endl;
+        cout << "Profilo dello studente con nome cognome == " << nome << " " << cognome << endl;
+        stampa_studente(database[numStudNomeCogn]);
+    }
+
     // Liberazione della memoria
-    for (int i = 0; i < n_righe; i++) {
+    for (int i = 0; i < n_righe; i++)
+    {
         delete database[i];
     }
     delete[] database;
